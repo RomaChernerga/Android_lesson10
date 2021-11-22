@@ -1,0 +1,28 @@
+<resources>
+
+    <string name="navigation_drawer_close">navigation_drawer_close</string>
+    <string name="navigation_drawer_open">navigation_drawer_open</string>
+    <string name="app_name">My Notes</string>
+
+
+        <string name="title1">Заметка 1</string>
+        <string name="title2">Заметка 2</string>
+        <string name="title3">Заметка 3</string>
+        <string name="title4">Заметка 4</string>
+        <string name="title5">Заметка 5</string>
+        <string name="title6">Заметка 6</string>
+        <string name="title7">Заметка 7</string>
+        <string name="title8">Заметка 8</string>
+        <string name="title9">Заметка 9</string>
+<!--        <string name="description1">Заметка 1</string>-->
+<!--        <string name="description2">Заметка 2</string>-->
+<!--        <string name="description3">Заметка 3</string>-->
+<!--        <string name="description4">Заметка 4</string>-->
+<!--        <string name="description5">Заметка 5</string>-->
+<!--        <string name="description6">Заметка 6</string>-->
+<!--        <string name="description7">Заметка 7</string>-->
+<!--        <string name="description8">Заметка 8</string>-->
+<!--        <string name="description9">Заметка 9</string>-->
+
+
+</resources>
