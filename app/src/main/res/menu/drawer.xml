@@ -16,6 +16,12 @@
         android:title="Вернуться"
         android:orderInCategory="99"
         app:showAsAction="always" />
+    <item
+        android:icon="@drawable/icon_close"
+        android:id="@+id/button_exit"
+        android:title="Вернуться"
+        android:orderInCategory="101"
+        app:showAsAction="always" />
 
 
 </menu>

@@ -13,6 +13,6 @@
         android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="300dp"
-        android:text="Приложение разработаное для введения заметок" />
+        android:text="@string/about" />
 
 </FrameLayout>

@@ -1,5 +1,7 @@
 package com.example.mynotes;
 
+import android.app.Activity;
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -16,15 +19,22 @@ import java.util.List;
 public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.CardViewHolder> {
 
     public static final String TAG = "Card Adapter";
-    private final List<Card>cardList;
+    private final CardSource source;
+    private final Activity activity;
     private onCardClickListener clickListener ;
+    private int menuPosition = -1;  // задаем вводную для menuPosition
 
-    public CardsAdapter(List<Card> cardList) {  // конструктор для списка элементов
-        this.cardList = cardList;
+    public CardsAdapter(Activity activity, CardSource source) {
+        this.source = source;
+        this.activity = activity;
     }
 
     public void setClickListener(onCardClickListener clickListener) {
         this.clickListener = clickListener;
+    }
+
+    public int getMenuPosition() {  // для последующего вызова MenuPosition
+        return menuPosition;
     }
 
     @NonNull
@@ -39,14 +49,14 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.CardViewHold
     @Override
     public void onBindViewHolder(@NonNull CardViewHolder holder, int position) {
 
-        holder.bind(cardList.get(position));
+        holder.bind(source.getCard(position));
 
         Log.d(TAG, "onBindViewHolder" + position);
     }
 
     @Override
     public int getItemCount() {
-        return cardList.size();
+        return source.size();
     }
 
      class CardViewHolder extends RecyclerView.ViewHolder {
@@ -54,10 +64,14 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.CardViewHold
         CheckBox like = itemView.findViewById(R.id.like);
         ImageView image = itemView.findViewById(R.id.imageView);
 
+
+
         public CardViewHolder(@NonNull View itemView) {
             super(itemView);
+            activity.registerForContextMenu(itemView);  //в него передаем контекстное меню
         }
 
+        @RequiresApi(api = Build.VERSION_CODES.N)
         void bind (Card card){
             title.setText(card.getTitle());
             like.setChecked(card.isLike());
@@ -67,6 +81,12 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.CardViewHold
                     clickListener.onCardClick(v, getAdapterPosition());
                 }
             });
+            // для каждого View Holder регестрируем разное контекстное меню
+            image.setOnLongClickListener(v -> {
+                menuPosition = getLayoutPosition();  // должны сохранить позицию
+                itemView.showContextMenu(100,100); // отступ от края при открытии контекстного меню
+                return true;
+            });  // длинное нажатие
         }
     }
 

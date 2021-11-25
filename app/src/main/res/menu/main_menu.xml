@@ -16,6 +16,18 @@
         android:title="Вернуться"
         android:orderInCategory="99"
         app:showAsAction="always" />
+    <item
+        android:icon="@drawable/icon_add"
+        android:id="@+id/action_add"
+        android:title="Добавить"
+        android:orderInCategory="101"
+        app:showAsAction="always" />
+    <item
+        android:icon="@drawable/icon_delete"
+        android:id="@+id/action_clear"
+        android:title="Очистить"
+        android:orderInCategory="102"
+        app:showAsAction="always" />
 
 
 </menu>
