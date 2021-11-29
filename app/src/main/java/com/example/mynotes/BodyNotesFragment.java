@@ -23,15 +23,18 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
+
 public class BodyNotesFragment extends Fragment {
 
     private static final String ARG_POSITION = "ARG_POSITION";
     private int position = -1;  // позиция по умолчанию
     private TextView source;
-
-
-
-
 
 
     public BodyNotesFragment() {
@@ -121,7 +124,7 @@ public class BodyNotesFragment extends Fragment {
 
         Button note_save = view.findViewById(R.id.note_save);  // для сохранения заметки(код будет в будущем )))
         note_save.setOnClickListener(v -> {
-//            saveText();
+            saveText();
         });
 
         Button text_clear = view.findViewById(R.id.text_clear);  // для сохранения заметки(код будет в будущем )))
@@ -129,6 +132,12 @@ public class BodyNotesFragment extends Fragment {
             body_note.setText("");
         });
     }
+    private void saveText() {
+
+
+
+    }
+
 
 
 }
