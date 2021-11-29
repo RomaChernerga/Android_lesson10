@@ -13,11 +13,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
@@ -27,21 +29,29 @@ import jp.wasabeef.recyclerview.animators.ScaleInBottomAnimator;
 public class MainActivity extends AppCompatActivity {
 
 
-    private CardSource source;
-    private CardsAdapter adapter;
+    public CardSource source;
+    public CardsAdapter adapter;
     private RecyclerView recyclerView;
     private int currentPosition = -1;
+
+    public SharedPreferences sharedPreferences = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        sharedPreferences = getPreferences(MODE_PRIVATE);
+
         initToolbar();
 
 
         recyclerView = findViewById(R.id.recycler_view);
-        source = new CardSourceImp(this);
+
+//        source = new CardSourceImp(this);
+
+        source = new PreferencesCardSource(sharedPreferences);
+
         adapter = new CardsAdapter(this, source); // передаем контекст и ресурс
         adapter.setClickListener((view, position) -> {
 
@@ -187,11 +197,42 @@ public class MainActivity extends AppCompatActivity {
             return true;
 
         } else if(item.getItemId() == R.id.action_add) {
-            source.addCard(
-                    new Card("Новая карточка", R.drawable.note ) // для создания новой карточки
-            );
-            adapter.notifyItemInserted(source.size() - 1); // уведомляем адаптер об изменении
-            recyclerView.scrollToPosition(source.size() - 1);
+            findViewById(R.id.action_add).setOnClickListener(v -> {
+
+                final View view  = getLayoutInflater().inflate(R.layout.custom_alert_dialog, null);  // для работы кнопки Apply
+
+                EditText editText = view.findViewById(R.id.edit_text);
+//                view.findViewById(R.id.button_apply).setOnClickListener(v1 ->
+//                        Toast.makeText(this, editText.getText().toString(), Toast.LENGTH_SHORT).show()  // задаем, чтобы в Toast выводился текст, который мы вводим в строку
+//
+//                );
+                new AlertDialog.Builder(this)
+                        .setMessage("Введите название заметки")
+                        .setView(view)
+                        .setTitle("Создание заметки")
+                        .setIcon(R.drawable.icon_info)
+                        .setPositiveButton("Создать", (dialog, which) -> {
+                            source.addCard(
+                            new Card(editText.getText().toString() , R.drawable.note ) // для создания новой карточки
+                            );
+                        adapter.notifyItemInserted(source.size() - 1); // уведомляем адаптер об изменении
+                        recyclerView.scrollToPosition(source.size() - 1);
+
+                            Toast.makeText(this, "Заметка "+ "'"+ editText.getText().toString()+"'"+" создана", Toast.LENGTH_SHORT).show();
+                        })
+                        .setNegativeButton("Отмена", (dialog, which) -> {
+//                            Toast.makeText(this, "Отмена", Toast.LENGTH_SHORT).show();
+                        })
+//                        .setNeutralButton("Непонятно", (dialog, which) -> {
+//                            Toast.makeText(this, "Нам непонятно", Toast.LENGTH_SHORT).show();
+//                        })
+                        .show();
+            });
+//            source.addCard(
+//                    new Card("Новая карточка", R.drawable.note ) // для создания новой карточки
+//            );
+//            adapter.notifyItemInserted(source.size() - 1); // уведомляем адаптер об изменении
+//            recyclerView.scrollToPosition(source.size() - 1);
             return true;
 
         } else if(item.getItemId() == R.id.action_clear) {

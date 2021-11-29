@@ -1,5 +1,8 @@
 package com.example.mynotes;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -25,6 +28,11 @@ public class BodyNotesFragment extends Fragment {
     private static final String ARG_POSITION = "ARG_POSITION";
     private int position = -1;  // позиция по умолчанию
     private TextView source;
+
+
+
+
+
 
     public BodyNotesFragment() {
         // Required empty public constructor
@@ -57,8 +65,6 @@ public class BodyNotesFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-
-
 
         MenuItem menuItem = menu.findItem(R.id.action_about);
         if(menuItem != null){
@@ -98,13 +104,15 @@ public class BodyNotesFragment extends Fragment {
 
         super.onViewCreated(view, savedInstanceState);
 
-        EditText editText = view.findViewById(R.id.body_note);  // текстовое поле заметки
-        editText.setBackgroundColor(Color.WHITE);       // текстовое поле заметки
-        editText.setTypeface(Typeface.SERIF);       // текстовое поле заметки
-        editText.setTextSize(20);       // текстовое поле заметки
+        EditText body_note = view.findViewById(R.id.body_note);  // текстовое поле заметки
+        body_note.setBackgroundColor(Color.WHITE);       // текстовое поле заметки
+        body_note.setTypeface(Typeface.SERIF);       // текстовое поле заметки
+        body_note.setTextSize(20);       // текстовое поле заметки
+
 
         TextView note_name = view.findViewById(R.id.note_name);
-        note_name.setText("Заметка # " + position+1);
+        note_name.setText("Заметка # " + position);           // исправить строчку кода!!!
+
 
         note_name.setTextSize(16);
         note_name.setTypeface(Typeface.DEFAULT_BOLD);
@@ -113,16 +121,14 @@ public class BodyNotesFragment extends Fragment {
 
         Button note_save = view.findViewById(R.id.note_save);  // для сохранения заметки(код будет в будущем )))
         note_save.setOnClickListener(v -> {
-
+//            saveText();
         });
 
         Button text_clear = view.findViewById(R.id.text_clear);  // для сохранения заметки(код будет в будущем )))
         text_clear.setOnClickListener(v -> {
-            editText.setText("");
+            body_note.setText("");
         });
-
-
-
     }
+
 
 }

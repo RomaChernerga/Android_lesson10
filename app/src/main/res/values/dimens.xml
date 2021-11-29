@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="body_note_margin_left">10dp</dimen>
+    <dimen name="body_note_margin_right">10dp</dimen>
+    <dimen name="button_text_size">13sp</dimen>
+    <dimen name="button_radius">15dp</dimen>
+</resources>
